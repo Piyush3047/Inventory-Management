@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1>📦 Inventory Management System</h1>
+                <p>Manage your shop inventory efficiently</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <nav class="nav-menu">
+                    <button class="nav-btn active" data-view="dashboard">
+                        📊 Dashboard
+                    </button>
+                    <button class="nav-btn" data-view="add-product">
+                        ➕ Add Product
+                    </button>
+                    <button class="nav-btn" data-view="products">
+                        📋 View Products
+                    </button>
+                    <button class="nav-btn" data-view="low-stock">
+                        ⚠️ Low Stock
+                    </button>
+                    <button class="nav-btn" data-view="reports">
+                        📈 Reports
+                    </button>
+                </nav>
+            </aside>
+
+            <!-- Content Area -->
+            <section class="content-area">
+                <!-- Dashboard View -->
+                <div id="dashboard" class="view active">
+                    <h2>Dashboard</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h3>Total Products</h3>
+                            <p class="stat-value" id="totalProducts">0</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Total Stock Value</h3>
+                            <p class="stat-value" id="totalValue">₹0</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Low Stock Items</h3>
+                            <p class="stat-value" id="lowStockCount">0</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Total Quantity</h3>
+                            <p class="stat-value" id="totalQuantity">0</p>
+                        </div>
+                    </div>
+                    <div class="recent-products">
+                        <h3>Recent Products</h3>
+                        <div id="recentProductsList" class="products-grid"></div>
+                    </div>
+                </div>
+
+                <!-- Add Product View -->
+                <div id="add-product" class="view">
+                    <h2>Add New Product</h2>
+                    <form id="productForm" class="form-container">
+                        <div class="form-group">
+                            <label for="productName">Product Name *</label>
+                            <input type="text" id="productName" required placeholder="Enter product name">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="productCategory">Category *</label>
+                                <select id="productCategory" required>
+                                    <option value="">Select Category</option>
+                                    <option value="Plywood">Plywood</option>
+                                    <option value="Adhesive">Adhesive</option>
+                                    <option value="White_Laminats">White_Laminats</option>
+                                    <option value="OFF_White_Laminats">OFF_White_Laminats</option>
+                                    <option value="Color_laminats">Color_laminats</option>
+                                    <!-- <option value="Home">Home & Garden</option>
+                                    <option value="Sports">Sports</option>
+                                    <option value="Other">Other</option> -->
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="productSKU">SKU/Code *</label>
+                                <input type="text" id="productSKU" required placeholder="e.g., SKU-001">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="productPrice">Unit Price (₹) *</label>
+                                <input type="number" id="productPrice" required placeholder="0.00" min="0" step="0.01">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="productQuantity">Quantity *</label>
+                                <input type="number" id="productQuantity" required placeholder="0" min="0">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="productMinStock">Min Stock Level *</label>
+                                <input type="number" id="productMinStock" required placeholder="0" min="0">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="productDescription">Description</label>
+                            <textarea id="productDescription" placeholder="Enter product description"
+                                rows="4"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="productSupplier">Supplier</label>
+                            <input type="text" id="productSupplier" placeholder="Enter supplier name">
+                        </div>
+
+                        <div class="button-group">
+                            <button type="submit" class="btn btn-primary">Add Product</button>
+                            <button type="reset" class="btn btn-secondary">Clear Form</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- View Products -->
+                <div id="products" class="view">
+                    <div class="view-header">
+                        <h2>Inventory</h2>
+                        <div class="search-filter">
+                            <input type="text" id="searchInput" placeholder="Search products..." class="search-box">
+                            <select id="categoryFilter" required>
+                                <option value="">Select Category</option>
+                                <option value="Plywood">Plywood</option>
+                                <option value="Adhesive">Adhesive</option>
+                                <option value="White_Laminats">White_Laminats</option>
+                                <option value="OFF_White_Laminats">OFF_White_Laminats</option>
+                                <option value="Color_laminats">Color_laminats</option>
+                                <!-- <option value="Home">Home & Garden</option>
+                                    <option value="Sports">Sports</option>
+                                    <option value="Other">Other</option> -->
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table id="productsTable">
+                            <thead>
+                                <tr>
+                                    <th>Product Name</th>
+                                    <th>SKU</th>
+                                    <th>Category</th>
+                                    <th>Price (₹)</th>
+                                    <th>Quantity</th>
+                                    <th>Min Stock</th>
+                                    <th>Status</th>
+                                    <th>Total Value</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productsBody">
+                            </tbody>
+                        </table>
+                    </div>
+                    <p id="noProducts" class="no-data">No products found. Start by adding a product!</p>
+                </div>
+
+                <!-- Low Stock View -->
+                <div id="low-stock" class="view">
+                    <h2>Low Stock Items</h2>
+                    <div id="lowStockList" class="products-grid"></div>
+                    <p id="noLowStock" class="no-data">All products are well-stocked!</p>
+                </div>
+
+                <!-- Reports View -->
+                <div id="reports" class="view">
+                    <h2>Reports</h2>
+                    <div class="reports-container">
+                        <div class="report-section">
+                            <h3>Inventory Summary</h3>
+                            <div id="reportsSummary" class="report-content"></div>
+                        </div>
+                        <div class="report-section">
+                            <h3>Category Breakdown</h3>
+                            <div id="categoryBreakdown" class="report-content"></div>
+                        </div>
+                        <div class="button-group">
+                            <button id="exportBtn" class="btn btn-primary">📥 Export to CSV</button>
+                            <button id="printBtn" class="btn btn-secondary">🖨️ Print Report</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Edit Product Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Edit Product</h2>
+            <form id="editForm" class="form-container">
+                <input type="hidden" id="editProductId">
+
+                <div class="form-group">
+                    <label for="editProductName">Product Name *</label>
+                    <input type="text" id="editProductName" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editProductCategory">Category *</label>
+                        <select id="editProductCategory" required>
+                            <option value="">Select Category</option>
+                            <option value="Plywood">Plywood</option>
+                            <option value="Adhesive">Adhesive</option>
+                            <option value="White_Laminats">White_Laminats</option>
+                            <option value="OFF_White_Laminats">OFF_White_Laminats</option>
+                            <option value="Color_laminats">Color_laminats</option>
+                            <!-- <option value="Home">Home & Garden</option>
+                                    <option value="Sports">Sports</option>
+                                    <option value="Other">Other</option> -->
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editProductSKU">SKU/Code *</label>
+                        <input type="text" id="editProductSKU" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editProductPrice">Unit Price (₹) *</label>
+                        <input type="number" id="editProductPrice" required min="0" step="0.01">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editProductQuantity">Quantity *</label>
+                        <input type="number" id="editProductQuantity" required min="0">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editProductMinStock">Min Stock Level *</label>
+                        <input type="number" id="editProductMinStock" required min="0">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="editProductDescription">Description</label>
+                    <textarea id="editProductDescription" rows="4"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="editProductSupplier">Supplier</label>
+                    <input type="text" id="editProductSupplier">
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary">Update Product</button>
+                    <button type="button" class="btn btn-secondary" id="cancelEdit">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content confirm-modal">
+            <h2>Confirm Delete</h2>
+            <p>Are you sure you want to delete this product?</p>
+            <p id="deleteProductName" style="font-weight: bold; color: #d9534f;"></p>
+            <div class="button-group">
+                <button id="confirmDelete" class="btn btn-danger">Delete</button>
+                <button id="cancelDelete" class="btn btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

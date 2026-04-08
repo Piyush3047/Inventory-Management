@@ -1,0 +1,50 @@
+[
+    {
+        "id": 1768548313905,
+        "name": " Anutham PRO (8X4)",
+        "category": "Plywood",
+        "sku": "AP-84",
+        "price": 80,
+        "quantity": 15,
+        "minStock": 20,
+        "description": "",
+        "supplier": "Patel Piyush",
+        "dateAdded": "1\/16\/2026"
+    },
+    {
+        "id": 1768548496739,
+        "name": "Anutham GOLD (8X4)",
+        "category": "Plywood",
+        "sku": "AG-84",
+        "price": 100,
+        "quantity": 100,
+        "minStock": 20,
+        "description": "",
+        "supplier": "Patel Piyush",
+        "dateAdded": "1\/16\/2026"
+    },
+    {
+        "id": 1768548755160,
+        "name": "White Laminats",
+        "category": "White_Laminats",
+        "sku": "WH-01",
+        "price": 200,
+        "quantity": 30,
+        "minStock": 100,
+        "description": "",
+        "supplier": "Dravya Patel",
+        "dateAdded": "1\/16\/2026"
+    },
+    {
+        "id": 1768549228152,
+        "name": "OFF White Laminats",
+        "category": "OFF_White_Laminats",
+        "sku": "OWL-01",
+        "price": 200,
+        "quantity": 1000,
+        "minStock": 100,
+        "description": "",
+        "supplier": "Dravya Patel",
+        "dateAdded": "1\/16\/2026"
+    }
+]
